@@ -1,0 +1,60 @@
+﻿<!-- Representa o objeto que essa View será responsável quando se utilizar os HtmlHelpers -->
+@model IEnumerable<Loja.MVC5.Model.Categoria>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Categorias</title>
+</head>
+<body>
+    <p>
+        <!-- Caso queria chamar uma Action de outro Controller -->
+        @*@Html.ActionLink("Text", "Action", "Controller")*@
+
+        <!-- Cria um link <a href> na tela. -->
+        @Html.ActionLink("Novo", "Form")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                <!-- Obtém o nome da propriedade do modelo -->
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                <!-- Exibe um texto -->
+                @Html.DisplayName("Ações")
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <!-- Obtém o conteúdo da propriedade a ser exibida -->
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                <!-- Direciona para uma rota do controller passando o id como parâmetro na URL -->
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Deletar", "Delete", new { id = item.Id }) | 
+                @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
+
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

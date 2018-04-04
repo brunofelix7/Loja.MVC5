@@ -1,0 +1,41 @@
+﻿@model Loja.MVC5.Model.Categoria
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Deseja realmente excluir a categoria abaixo?</h3>
+    <div>
+        <h4>Excluir Categoria</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                <strong>@Html.DisplayNameFor(model => model.Nome)</strong>
+            </dt>
+    
+            <dt>
+                @Html.DisplayFor(model => model.Nome)
+            </dt>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Voltar", "List")
+            </div>
+        }
+    </div>
+</body>
+</html>

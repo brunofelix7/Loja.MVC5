@@ -1,0 +1,51 @@
+﻿@model Loja.MVC5.Model.Categoria
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Form</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- Cria um formulário com métofo de envio POST para o mesmo nome da action do GET do formulário -->
+    @using (Html.BeginForm()) {
+        <!-- Cria um campo oculto com um token e impede que outras pessoas façam requisições para essa action -->
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Nova Categoria</h4>
+        <hr />
+        <!-- Retorna uma lista não ordenada com mensagens de validação em um objeto ModelStateDictionary -->
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <!-- Cria um label com o nome da propriedade do objeto -->
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <!-- Cria um input na tela -->
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                <!-- Cria uma mensagem de erro específica para um atributo do modelo -->
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cadastrar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+    <br />
+    <div>
+        @Html.ActionLink("Voltar", "List")
+    </div>
+</body>
+</html>
