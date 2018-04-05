@@ -6,18 +6,18 @@ using System.Web.Mvc;
 
 namespace Loja.MVC5.Web.Controllers {
 
-    public class CategoriaController : Controller {
+    public class FabricanteController : Controller {
 
-        private CategoriaDAO categoriaDAO;
+        private FabricanteDAO fabricanteDAO;
 
-        public CategoriaController() {
-            this.categoriaDAO = new CategoriaDAO();
+        public FabricanteController() {
+            this.fabricanteDAO = new FabricanteDAO();
         }
 
         [HttpGet]
         public ActionResult Index() {
-            IList<Categoria> categorias = this.categoriaDAO.FindAll();
-            return View(categorias);
+            IList<Fabricante> fabricantes = this.fabricanteDAO.FindAll();
+            return View(fabricantes);
         }
 
         [HttpGet]
@@ -27,31 +27,33 @@ namespace Loja.MVC5.Web.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Form(Categoria categoria) {
-            this.categoriaDAO.Save(categoria);
+        public ActionResult Form(Fabricante fabricante) {
+            this.fabricanteDAO.Save(fabricante);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Edit(long? id) {
-            if (id == null) {
+            if(id == null) {
+                //  Retorna uma descrição e um código de erro
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = this.categoriaDAO.FindOne(id);
-            if (categoria == null) {
+            Fabricante fabricante = this.fabricanteDAO.FindOne(id);
+            if(fabricante == null) {
+                //  Retorna uma página de erro 404
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(fabricante);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Categoria categoria) {
+        public ActionResult Edit(Fabricante fabricante) {
             if (ModelState.IsValid) {
-                this.categoriaDAO.Update(categoria);
+                this.fabricanteDAO.Update(fabricante);
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            return View(fabricante);
         }
 
         [HttpGet]
@@ -59,30 +61,30 @@ namespace Loja.MVC5.Web.Controllers {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = this.categoriaDAO.FindOne(id);
-            if (categoria == null) {
+            Fabricante fabricante = this.fabricanteDAO.FindOne(id);
+            if (fabricante == null) {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(fabricante);
         }
 
         [HttpGet]
         public ActionResult Delete(long? id) {
-            if (id == null) {
+            if(id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = this.categoriaDAO.FindOne(id);
-            if (categoria == null) {
+            Fabricante fabricante = this.fabricanteDAO.FindOne(id);
+            if(fabricante == null) {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(fabricante);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(long id) {
-            Categoria categoria = this.categoriaDAO.FindOne(id);
-            this.categoriaDAO.Delete(categoria);
+            Fabricante fabricante = this.fabricanteDAO.FindOne(id);
+            this.fabricanteDAO.Delete(fabricante);
             return RedirectToAction("Index");
         }
     }

@@ -1,52 +1,46 @@
-﻿using Loja.MVC5.Model;
+﻿using Loja.MVC5.Database.Context;
+using Loja.MVC5.Database.Interfaces;
+using Loja.MVC5.Model;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Loja.MVC5.Database.DAO {
 
-    public class CategoriaDAO {
+    public class CategoriaDAO : ICategoriaDAO, IDisposable {
 
-        private static IList<Categoria> categorias = new List<Categoria>();
+        private EFContext context;
 
-        public static void Save(Categoria categoria) {
-            categorias.Add(categoria);
-            categoria.Id = categorias.Select(m => m.Id).Max() + 1;
+        public CategoriaDAO() {
+            this.context = new EFContext();
         }
 
-        public static void Update(Categoria categoria) {
-            categorias.Remove(categorias.Where(c => c.Id == categoria.Id).First());
-            categorias.Add(categoria);
+        public void Dispose() {
+            this.context.Dispose();
         }
 
-        public static void Delete(Categoria categoria) {
-            categorias.Remove(categorias.Where(c => c.Id == categoria.Id).First());
+        public void Save(Categoria categoria) {
+            this.context.Categorias.Add(categoria);
+            this.context.SaveChanges();
         }
 
-        public static Categoria FindOne(long id) {
-            return categorias.Where(m => m.Id == id).First();
+        public void Update(Categoria categoria) {
+            this.context.Entry(categoria).State = EntityState.Modified;
+            this.context.SaveChanges();
         }
 
-        public static IList<Categoria> FindAll(){
-            categorias.Add(new Categoria() {
-                Id = 1,
-                Nome = "Notebooks"
-            });
-            categorias.Add(new Categoria() {
-                Id = 2,
-                Nome = "Monitores"
-            });
-            categorias.Add(new Categoria() {
-                Id = 3,
-                Nome = "Impressoras"
-            });
-            categorias.Add(new Categoria() {
-                Id = 4,
-                Nome = "Mouses"
-            });
-            categorias.Add(new Categoria() {
-                Id = 5,
-                Nome = "Desktops"
-            });
+        public void Delete(Categoria categoria) {
+            this.context.Categorias.Remove(categoria);
+            this.context.SaveChanges();
+        }
+
+        public Categoria FindOne(long? id) {
+            return this.context.Categorias.Find(id);
+        }
+
+        public IList<Categoria> FindAll() {
+            IList<Categoria> categorias = this.context.Categorias.OrderBy(c => c.Nome).ToList(); ;
             return categorias;
         }
     }
