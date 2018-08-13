@@ -33,7 +33,7 @@ namespace Loja.MVC5.Web.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Edit(long? id) {
+        public ActionResult Edit(long id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -55,7 +55,7 @@ namespace Loja.MVC5.Web.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Details(long? id) {
+        public ActionResult Details(long id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -67,7 +67,7 @@ namespace Loja.MVC5.Web.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Delete(long? id) {
+        public ActionResult Delete(long id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -80,7 +80,7 @@ namespace Loja.MVC5.Web.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long id) {
+        public ActionResult Delete(long? id) {
             Categoria categoria = this.categoriaDAO.FindOne(id);
             this.categoriaDAO.Delete(categoria);
             return RedirectToAction("Index");

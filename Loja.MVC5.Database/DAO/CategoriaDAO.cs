@@ -40,7 +40,7 @@ namespace Loja.MVC5.Database.DAO {
         }
 
         public IList<Categoria> FindAll() {
-            IList<Categoria> categorias = this.context.Categorias.OrderBy(c => c.Nome).ToList(); ;
+            IList<Categoria> categorias = this.context.Categorias.OrderBy(c => c.Nome).ToList();
             return categorias;
         }
     }
